@@ -24,8 +24,15 @@
     .field-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.field-head strong{font-size:13px}.field select{max-width:180px;padding:6px 8px;border:1px solid var(--line);border-radius:9px;color:var(--text);background:var(--panel2);font-size:11px}
     .field textarea{width:100%;min-height:62px;margin-top:8px;padding:10px;border:1px solid #ffffff12;border-radius:9px;resize:vertical;color:var(--text);background:#050d1770;line-height:1.45}.field textarea::placeholder{color:#a17572}.field small{display:block;margin-top:6px;color:#77899b;font-size:11px}
     .footer{margin-top:24px;padding:18px;border:1px solid var(--line);border-radius:16px;color:var(--muted);font-size:12px;line-height:1.55}.hidden{display:none!important}
+    dialog.import-dialog{width:min(920px,calc(100% - 24px));max-height:min(860px,calc(100vh - 24px));padding:0;border:1px solid #e5c66f66;border-radius:22px;color:var(--text);background:#0d1a2a;box-shadow:0 28px 90px #000a;overflow:hidden}dialog.import-dialog::backdrop{background:#020711cf;backdrop-filter:blur(5px)}
+    .import-head{position:sticky;top:0;z-index:2;display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:20px 22px;border-bottom:1px solid var(--line);background:#101d2df5}.import-head h2{margin:3px 0 0;font:500 26px Georgia,serif}.icon-button{width:43px;min-width:43px;padding:0;font-size:22px}
+    .import-body{max-height:calc(100vh - 120px);padding:22px;overflow:auto}.import-body h3{margin:0 0 8px;font:500 21px Georgia,serif}.import-copy{margin:0 0 15px;color:var(--muted);line-height:1.55}.import-file-name{margin:0 0 18px;padding:11px 13px;border:1px solid var(--line);border-radius:11px;color:var(--gold);background:#ffffff08;overflow-wrap:anywhere}
+    .import-options{display:grid;gap:10px;margin:16px 0}.import-option{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;padding:13px;border:1px solid var(--line);border-radius:13px;background:#ffffff05}.import-option input{width:19px;height:19px;margin-top:2px;accent-color:var(--gold)}.import-option strong,.import-option small{display:block}.import-option small{margin-top:4px;color:var(--muted);line-height:1.45}.import-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}.import-actions .primary{min-width:150px}
+    .import-error,.import-warning{margin:14px 0 0;padding:12px 14px;border:1px solid #ef8b7d66;border-radius:11px;color:#ffd3ce;background:#ef8b7d12;line-height:1.5}.import-warning{border-color:#e4bd6266;color:#f3d98b;background:#e4bd6210}
+    .import-progress{width:100%;height:13px;margin:12px 0 10px;accent-color:var(--gold)}#import-detail{color:var(--muted)}
+    .import-preview-tools{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:14px 0}.import-preview-tools p{flex:1 1 300px;margin:0;color:var(--muted);line-height:1.45}.import-preview-list{display:grid;gap:10px}.import-item{display:grid;grid-template-columns:auto 1fr;gap:11px;padding:13px;border:1px solid var(--line);border-radius:14px;background:#ffffff05}.import-item.conflict{border-color:#e4bd6252}.import-item .import-check{width:20px;height:20px;margin-top:2px;accent-color:var(--gold)}.import-item strong,.import-item small{display:block}.import-item small{margin-top:3px;color:var(--muted);line-height:1.4}.import-value{width:100%;min-height:68px;margin-top:8px;padding:10px;border:1px solid #ffffff18;border-radius:9px;resize:vertical;color:var(--text);background:#050d1770;line-height:1.45}.import-old{margin:8px 0 0;padding:8px 10px;border-radius:8px;color:#f3d98b;background:#e4bd6210;font-size:12px;line-height:1.45;white-space:pre-wrap}
     @media(max-width:820px){.shell{padding-top:18px}.hero{align-items:stretch;flex-direction:column}.progress{display:flex;align-items:baseline;justify-content:center;gap:8px;padding:14px}.progress strong{display:inline}.library-row{grid-template-columns:1fr 1fr}.library-row label{grid-column:1/-1}.toolbar small{width:100%;margin:0}.document-head,.grid{grid-template-columns:1fr}.card{padding:16px}.field-head{align-items:stretch;flex-direction:column}.field select{max-width:none}}
-    @media(max-width:500px){.library-row{grid-template-columns:1fr}.library-row label{grid-column:auto}.library-row button{width:100%}.toolbar>*{flex:1 1 135px}.toolbar small{flex-basis:100%}}
+    @media(max-width:500px){.library-row{grid-template-columns:1fr}.library-row label{grid-column:auto}.library-row button{width:100%}.toolbar>*{flex:1 1 135px}.toolbar small{flex-basis:100%}.import-head,.import-body{padding:16px}.import-actions>*{flex:1 1 135px}.import-item{grid-template-columns:1fr}.import-item .import-check{justify-self:start}}
     @media print{body{color:#111;background:#fff}.shell{width:100%;padding:0}.library,.toolbar,.legend{display:none!important}.hero{margin-bottom:12px}.hero .lead,.progress span,.card>p,.field small{color:#444}.document-head,.progress,.card,.field{break-inside:avoid;border-color:#aaa;color:#111;background:#fff;box-shadow:none}.grid{gap:10px}.document-head input,.field textarea,.field select{border-color:#bbb;color:#111;background:#fff}}
   </style>
 </head>
@@ -57,8 +64,8 @@
       <button class="primary" id="export-docx" title="A most látható, kitöltött adatokat tölti az eredeti Szigligeti Word-sablonba.">Kitöltött Word (.docx) letöltése</button>
       <a class="file-button hidden" id="docx-ready">Word-fájl letöltése</a>
       <button id="export">Biztonsági mentés (.json)</button>
-      <label class="file-button" for="import-file">Importálás</label>
-      <input class="hidden" id="import-file" type="file" accept="application/json,.json">
+      <label class="file-button" for="import-file" title="JSON, régi Word (.doc), Word (.docx), PDF és szkennelt PDF importálása">Dokumentum import</label>
+      <input class="hidden" id="import-file" type="file" accept="application/json,.json,application/msword,.doc,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.docx,application/pdf,.pdf">
       <small id="notice">Új, még nem mentett rider.</small>
     </div>
 
@@ -68,10 +75,66 @@
       <span class="tag missing">Hiányzik</span>
     </div>
     <section class="grid" id="grid"></section>
-    <p class="footer">A mentett riderek ezen az eszközön, a böngésző tárhelyén maradnak. A „Kitöltött Word (.docx) letöltése” a most látható adatokat írja bele a hivatalos, logós Szigligeti technikai egyeztető eredeti elrendezésébe; a hiányzó mezők üresen maradnak. Ha a böngésző nem indítja el automatikusan a letöltést, megjelenik egy külön „Word-fájl letöltése” gomb. A JSON-export kizárólag adatbiztonsági mentés.</p>
+    <p class="footer">A mentett riderek ezen az eszközön, a böngésző tárhelyén maradnak. A „Kitöltött Word (.docx) letöltése” a most látható adatokat írja bele a hivatalos, logós Szigligeti technikai egyeztető eredeti elrendezésébe; a hiányzó mezők üresen maradnak. A dokumentumimport JSON-, DOC-, DOCX- és PDF-fájlt fogad. A gépelt és szkennelt szöveg helyben dolgozható fel; a kézírás-felismerés csak külön bekapcsolva, a párosított Merlinnel fut. Minden felismert adat előnézetben ellenőrizhető, és meglévő mezőt nem ír felül automatikusan.</p>
   </main>
 
+  <dialog class="import-dialog" id="import-dialog" aria-labelledby="import-title">
+    <div class="import-head">
+      <div>
+        <p class="eyebrow">Biztonságos dokumentumimport</p>
+        <h2 id="import-title">DOC, DOCX vagy PDF beolvasása</h2>
+      </div>
+      <button class="icon-button" id="import-close" type="button" aria-label="Import ablak bezárása">×</button>
+    </div>
+    <div class="import-body">
+      <section id="import-setup">
+        <h3>Kiválasztott dokumentum</h3>
+        <p class="import-file-name" id="import-file-name"></p>
+        <p class="import-copy">A rendszer előbb csak felismeri és előnézetben megmutatja az adatokat. A rider kizárólag az „Alkalmazás” gomb után változik meg.</p>
+        <div class="import-options hidden" id="import-pdf-options">
+          <label class="import-option">
+            <input id="import-local-ocr" type="checkbox" checked>
+            <span><strong>Szkennelt, nyomtatott PDF helyi felismerése</strong><small>A magyar és angol gépelt szöveg a böngészőben marad. Csak a szövegréteg nélküli oldalakon indul el.</small></span>
+          </label>
+          <label class="import-option">
+            <input id="import-handwriting" type="checkbox" disabled>
+            <span><strong>Kézírás is van a PDF-ben</strong><small>A PDF oldalképeit a saját, párosított Merlin-kapcsolat elemzi. Minden eredmény ellenőrzendő marad.</small></span>
+          </label>
+          <p class="import-copy" id="import-bridge-state"></p>
+        </div>
+        <p class="import-error hidden" id="import-error" role="alert"></p>
+        <div class="import-actions">
+          <button class="primary" id="import-start" type="button">Felismerés indítása</button>
+          <button id="import-cancel" type="button">Mégse</button>
+        </div>
+      </section>
+
+      <section class="hidden" id="import-working" aria-live="polite">
+        <h3>Feldolgozás folyamatban</h3>
+        <progress class="import-progress" id="import-progress" max="100" value="0"></progress>
+        <p id="import-detail">A dokumentum előkészítése…</p>
+        <div class="import-actions"><button id="import-abort" type="button">Megszakítás</button></div>
+      </section>
+
+      <section class="hidden" id="import-preview">
+        <h3>Felismert adatok előnézete</h3>
+        <div class="import-preview-tools">
+          <p id="import-summary"></p>
+          <button id="import-select-new" type="button">Csak üres mezők</button>
+          <button id="import-select-all" type="button">Mind kijelölése</button>
+        </div>
+        <p class="import-warning hidden" id="import-warning"></p>
+        <div class="import-preview-list" id="import-preview-list"></div>
+        <div class="import-actions">
+          <button class="primary" id="import-apply" type="button">Kijelöltek alkalmazása</button>
+          <button id="import-preview-cancel" type="button">Mégse</button>
+        </div>
+      </section>
+    </div>
+  </dialog>
+
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="./document-import.js"></script>
   <script>
     const DB_KEY="szigligeti-technikai-egyezteto-v4";
     const PREVIOUS_DB_KEY="szigligeti-technikai-egyezteto-v3";
@@ -545,7 +608,13 @@
     $("#delete").onclick=()=>{const r=db.riders.find(x=>x.id===list.value);if(!r||!confirm(`Biztosan törlöd: ${r.title||"Névtelen rider"}?`))return;db.riders=db.riders.filter(x=>x.id!==r.id);if(current.id===r.id)current=makeBlank();persist();notice.textContent="A mentett rider törölve.";render()};
     $("#export-docx").onclick=()=>void exportFilledDocx();
     $("#export").onclick=()=>{const payload={format:"szigligeti-rider",version:1,exportedAt:now(),rider:current};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${(current.title||"technikai-rider").replace(/[^\p{L}\p{N}]+/gu,"-").replace(/^-|-$/g,"").toLowerCase()}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);notice.textContent="A rider exportálva."};
-    $("#import-file").onchange=async e=>{const file=e.target.files[0];e.target.value="";if(!file)return;try{const parsed=JSON.parse(await file.text());if(parsed.format!=="szigligeti-rider"||!parsed.rider?.sections)throw new Error();current=mergeWithSchema(parsed.rider);current.id=null;notice.textContent="Rider importálva. A végleges mentéshez kattints a Mentés gombra.";persist();render()}catch{alert("Ez nem érvényes Szigligeti technikai rider export.")}};
+    RiderDocumentImport.init({
+      getCurrent:()=>current,
+      persist,
+      render,
+      now,
+      setNotice:message=>{notice.textContent=message}
+    });
     render();
   </script>
 </body>
