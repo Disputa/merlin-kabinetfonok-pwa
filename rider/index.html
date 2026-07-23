@@ -61,12 +61,6 @@
       <small id="notice">Új, még nem mentett rider.</small>
     </div>
 
-    <section class="document-head">
-      <label>Előadás neve<input id="rider-name" placeholder="Például: A muzsika hangja"></label>
-      <label>Helyszín<input id="rider-venue" placeholder="Helyszín"></label>
-      <label>Előadás dátuma<input id="rider-date" type="date"></label>
-    </section>
-
     <div class="legend">
       <span class="tag filled">Kitöltve</span>
       <span class="tag verify">Ellenőrzendő / következtetett</span>
@@ -77,38 +71,90 @@
   </main>
 
   <script>
-    const DB_KEY="szigligeti-technikai-egyezteto-v1";
+    const DB_KEY="szigligeti-technikai-egyezteto-v2";
     const labels={filled:"Kitöltve",inferred:"Forrásból következtetett",verify:"Ellenőrzendő",missing:"Hiányzik"};
     const schema=[
-      ["Alapadatok","Az előadás és a vendégjáték alapvető adatai",[
-        ["company","Fogadó színház / rendezvény","","missing",""],["contact","Technikai kapcsolattartó és elérhetősége","","missing",""],["duration","Játékidő, felvonások, szünet","","missing",""],["notes","Általános megjegyzés","","missing",""]
+      ["Alapadatok","Az eredeti technikai egyeztető fejlécének mezői",[
+        ["theatre","Színház neve","","missing",""],
+        ["author-title","Előadás szerzője, címe","","missing",""],
+        ["performance-time","Előadás időpontja","","missing",""],
+        ["contact","Kapcsolattartó személy és telefonszáma","","missing",""],
+        ["site-visit","Terveznek-e előzetes helyszíni szemlét?","","missing",""]
       ]],
-      ["Időzítés","Próba, beépítés, előadás és bontás",[
-        ["arrival","Érkezés és rakodás","","missing",""],["loadin","Beépítés kezdete és időtartama","","missing",""],["rehearsal","Próba / összpróba","","missing",""],["soundcheck","Hangbeállás","","missing",""],["showtime","Előadás kezdése","","missing",""],["strike","Bontás kezdete és időtartama","","missing",""]
+      ["Előadás és próba","Időtartam, felvonások, szünet és próbaigény",[
+        ["duration","Előadás időtartama","","missing",""],
+        ["acts","Felvonások száma","","missing",""],
+        ["interval","Szünet hossza","","missing",""],
+        ["rehearsal-need","Próbaigény","","missing",""],
+        ["runthrough","Lejáró próba","","missing",""],
+        ["rehearsal-time","Próba időpontja","","missing",""],
+        ["rehearsal-duration","Próba időtartama","","missing",""]
       ]],
-      ["Utazás és logisztika","Járművek, személyzet, parkolás és rakodás",[
-        ["vehicles","Járművek típusa, súlya, rendszáma","","missing",""],["transport","Személyszállítás","","missing",""],["crew-travel","Utazó technikai személyzet","","missing",""],["parking","Parkolás és rakodási útvonal","","missing",""],["cost","Szállítási / logisztikai költség","","missing",""]
+      ["Beszerelés és bontás","Az eredeti egyeztető szerelési időrendje",[
+        ["loadin-total","Beszerelés összes időtartama és kezdése","","missing",""],
+        ["set-build","Díszletépítés időtartama és kezdése","","missing",""],
+        ["lighting-setup","Világítás időtartama és kezdése","","missing",""],
+        ["soundcheck","Hangbeállás időtartama és kezdése","","missing",""],
+        ["video-setup","Videóbeállás időtartama és kezdése","","missing",""],
+        ["lighting-rig-start","Világításszerelés kezdési időpontja","","missing",""],
+        ["strike","Bontás időtartama és kezdése","","missing",""],
+        ["local-tech","Helyi technikai igény","","missing",""]
       ]],
-      ["Színpad és díszlet","Méret, padló, takarás és színpadtechnika",[
-        ["stage-size","Színpad szélessége, mélysége, magassága","","missing",""],["floor","Balettpadló / járófelület","","missing",""],["masking","Takarás, forgó, dobogók, lépcsők","","missing",""],["scenery","Díszlet és mozgatása","","missing",""],["stage-special","Egyéb színpadtechnikai igény","","missing",""]
+      ["Érkező járművek","Típus, rendszám, tömeg és érkezés",[
+        ["vehicle-type","Járművek típusa","","missing",""],
+        ["vehicle-plate","Járművek rendszáma","","missing",""],
+        ["vehicle-mass","Járművek együttes tömege","","missing",""],
+        ["vehicle-arrival","Érkezés időpontja","","missing",""]
       ]],
-      ["Fény","Fénypark, vezérlés, füst és áramigény",[
-        ["lighting-inventory","Lámpalista és vezérlés","","missing",""],["lighting-plan","Fényterv / lámpapozíciók","","missing",""],["smoke","Füst / haze","","missing",""],["lighting-power","Teljesítményigény és különleges lámpák","","missing",""]
+      ["Érkezési létszám és időpont","A produkció egyes csoportjainak érkezése",[
+        ["arrival-scenery","Díszlet, jelmez, kellék","","missing",""],
+        ["arrival-tech","Műszaki személyzet","","missing",""],
+        ["arrival-dressers","Öltöztetők, fodrászok, kellékesek","","missing",""],
+        ["arrival-artists","Művészek","","missing",""]
       ]],
-      ["Hang","PA, mikrofonok, zenekar, monitorok és beállás",[
-        ["pa","PA és keverőpult","","missing",""],["wireless","Microportok / vezeték nélküli mikrofonok","","missing",""],["inputs","Zenekari inputlista","","missing",""],["monitors","Monitorok és monitorutak","","missing",""],["sound-order","Hangbeállási sorrend","","missing",""],["playback","Bejátszás és effektek","","missing",""]
+      ["Öltözőbeosztás","Szereplői és műszaki létszámok, speciális igények",[
+        ["female-cast","Női szereplők száma","","missing",""],
+        ["male-cast","Férfi szereplők száma","","missing",""],
+        ["group-female","Csoportos női szereplők száma","","missing",""],
+        ["group-male","Csoportos férfi szereplők száma","","missing",""],
+        ["orchestra","Zenekar létszáma / igénye","","missing",""],
+        ["technical-staff","Műszaki és egyéb kiszolgáló személyzet","","missing",""],
+        ["dressing-special","Speciális öltözőigények","","missing",""]
       ]],
-      ["Videó és kommunikáció","Vetítés, jelutak és ügyelői kommunikáció",[
-        ["video","Vetítő, vászon, LED vagy monitor","","missing",""],["video-signal","Videójel és csatlakozások","","missing",""],["comms","Ügyelői rendszer / intercom","","missing",""]
+      ["Színpadtechnika","Szükséges színpadtér és alapvető technikai igények",[
+        ["stage-width","Szükséges színpadszélesség (m)","","missing",""],
+        ["stage-depth","Szükséges színpadmélység (m)","","missing",""],
+        ["stage-height","Szükséges színpadmagasság (m)","","missing",""],
+        ["ballet-floor","Balettszőnyeg szükséges-e?","","missing",""],
+        ["revolve","Forgószínpad szükséges-e?","","missing",""],
+        ["masking","Takarások szükségesek-e?","","missing",""],
+        ["risers","Emelvények, lépcsők","","missing",""],
+        ["stage-other","Egyéb színpadtechnikai igény","","missing",""]
       ]],
-      ["Stáb és öltözők","Személyzet, szereplők és kiszolgálóhelyiségek",[
-        ["cast-crew","Teljes szereplő- és stáblista","","missing",""],["local-crew","Helyi technikai személyzet igénye","","missing",""],["dressing","Öltözők elosztása","","missing",""],["wardrobe","Öltöztető, mosás, vasalás","","missing",""],["hair-makeup","Smink és fodrász","","missing",""]
+      ["Fénytechnika","Az eredeti egyeztető fénytechnikai mezői",[
+        ["smoke","Füstgép","","missing",""],
+        ["lighting-inventory","Lámpapark","","missing",""],
+        ["lighting-special","Egyéb speciális fénytechnikai igények","","missing",""]
       ]],
-      ["Biztonság","Tűzvédelem, pirotechnika és különleges kockázatok",[
-        ["fire","Tűzvédelmi igények","","missing",""],["pyro","Pirotechnika / nyílt láng","","missing",""],["risk","Egyéb biztonsági kockázat","","missing",""]
+      ["Hangtechnika","Az eredeti egyeztető hangtechnikai mezői",[
+        ["wireless","Mikrofonok / mikroportok száma","","missing",""],
+        ["monitors","Monitorutak száma","","missing",""],
+        ["effects","Szükséges effektek","","missing",""],
+        ["sound-other","Egyéb hangtechnika","","missing",""]
       ]],
-      ["Szerződés és számlázás","Szerződő fél és pénzügyi adminisztráció",[
-        ["legal-name","Szerződő cég neve és címe","","missing",""],["tax","Adószám","","missing",""],["bank","Bankszámla","","missing",""],["representative","Képviselő és kapcsolattartó","","missing",""],["billing","Számlázási megjegyzés","","missing",""]
+      ["Biztonság","Az előadásban alkalmazott különleges hatások",[
+        ["pyro","Alkalmaznak-e pirotechnikai effektet?","","missing",""],
+        ["fire","Alkalmaznak-e tűzveszélyes cselekményt?","","missing",""]
+      ]],
+      ["Szerződéshez szükséges adatok","Az eredeti technikai egyeztető adminisztratív mezői",[
+        ["legal-name","Név","","missing",""],
+        ["registered-office","Székhely","","missing",""],
+        ["tax","Adószám","","missing",""],
+        ["registry","Cégjegyzékszám / nyilvántartási szám","","missing",""],
+        ["bank","Bankszámlaszám","","missing",""],
+        ["representative","Képviselő","","missing",""],
+        ["general-contact","Kapcsolattartó (név, telefon, e-mail)","","missing",""],
+        ["technical-contact","Technikai kapcsolattartó (név, telefon, e-mail)","","missing",""]
       ]]
     ];
     const clone=v=>JSON.parse(JSON.stringify(v));
@@ -117,27 +163,25 @@
     const makeMuzsika=()=>{
       const r=makeBlank();r.id="sample-muzsika-hangja";r.title="A muzsika hangja";r.venue="Gyula, Tószínpad";r.updatedAt=now();
       const set=(id,value,status="filled",source="")=>{for(const s of r.sections){const f=s[2].find(x=>x[0]===id);if(f){f[2]=value;f[3]=status;f[4]=source;return}}};
-      set("soundcheck","2026. április 16., 18:00–18:45","filled","Hangbeállási rend");
-      set("vehicles","2 × 7,5 t és 1 × 3,5 t teherautó","filled","TÁJ – Gyula");
-      set("transport","1 × 19 személyes mikrobusz; előadásnapon 1 × 50 személyes autóbusz és 1 × 19 személyes mikrobusz","filled","TÁJ – Gyula");
-      set("crew-travel","8 díszítő, 5 világosító és Ignácz Gyuri; 4 díszítő és 4 világosító marad","verify","TÁJ – Gyula");
-      set("cost","1 113 000 Ft + ÁFA","filled","TÁJ – Gyula");
-      set("wireless","Microportos előadás – pontos darabszám és kiosztás hiányzik","verify","Hangbeállási rend");
-      set("inputs","Zenekaros előadás – végleges inputlista hiányzik","verify","Hangbeállási rend");
-      set("sound-order","18:00 zenekar; 18:10 DóReMi; 18:15 Barabás B.; 18:20 duett; 18:25 A muzsika hangja; 18:30 tercett; 18:35 Rolf–Liesl; 18:40 apácák és kórus","filled","Hangbeállási rend");
+      set("author-title","A muzsika hangja","filled","Helyi produkciós mappa");
+      set("performance-time","Pontos időpont ellenőrzendő","verify","TÁJ – Gyula");
+      set("soundcheck","2026. április 16., 18:00–18:45. Sorrend: zenekar; DóReMi; Barabás B.; duett; A muzsika hangja; tercett; Rolf–Liesl; apácák és kórus.","filled","Hangbeállási rend");
+      set("vehicle-type","2 × 7,5 t teherautó; 1 × 3,5 t teherautó; 1 × 19 személyes mikrobusz; előadásnapon 1 × 50 személyes autóbusz és 1 × 19 személyes mikrobusz","filled","TÁJ – Gyula");
+      set("arrival-tech","8 díszítő, 5 világosító és Ignácz Gyuri. A dokumentum szerint 4 díszítő és 4 világosító marad.","verify","TÁJ – Gyula");
+      set("wireless","Microportos előadás; a pontos darabszám még hiányzik.","verify","Hangbeállási rend");
+      set("orchestra","Zenekaros előadás; a pontos létszám és öltözőigény még hiányzik.","verify","Hangbeállási rend");
       return r;
     };
     let db={riders:[makeMuzsika()],draft:makeBlank()};
     try{const stored=localStorage.getItem(DB_KEY);if(stored)db=JSON.parse(stored)}catch{localStorage.removeItem(DB_KEY)}
     let current=clone(db.draft||makeBlank());
     const $=s=>document.querySelector(s),grid=$("#grid"),list=$("#saved-list"),notice=$("#notice"),count=$("#count");
-    const nameInput=$("#rider-name"),venueInput=$("#rider-venue"),dateInput=$("#rider-date");
     function persist(){db.draft=clone(current);localStorage.setItem(DB_KEY,JSON.stringify(db))}
     function optionLabel(r){const stamp=new Date(r.updatedAt).toLocaleDateString("hu-HU");return `${r.title||"Névtelen rider"}${r.venue?` – ${r.venue}`:""} (${stamp})`}
     function renderLibrary(){list.innerHTML="";if(!db.riders.length){const o=new Option("Nincs mentett rider","");list.add(o);return}db.riders.sort((a,b)=>b.updatedAt.localeCompare(a.updatedAt)).forEach(r=>list.add(new Option(optionLabel(r),r.id)));if(current.id&&db.riders.some(r=>r.id===current.id))list.value=current.id}
-    function updateCount(){const all=current.sections.flatMap(s=>s[2]);const meta=[current.title,current.venue,current.date];count.textContent=`${all.filter(f=>f[2].trim()).length+meta.filter(Boolean).length}/${all.length+3}`}
+    function updateCount(){const all=current.sections.flatMap(s=>s[2]);count.textContent=`${all.filter(f=>f[2].trim()).length}/${all.length}`}
     function render(){
-      nameInput.value=current.title||"";venueInput.value=current.venue||"";dateInput.value=current.date||"";grid.innerHTML="";
+      grid.innerHTML="";
       current.sections.forEach((section,si)=>{
         const card=document.createElement("article");card.className="card";card.innerHTML=`<h2></h2><p></p><div class="fields"></div>`;card.querySelector("h2").textContent=section[0];card.querySelector("p").textContent=section[1];
         const fields=card.querySelector(".fields");
@@ -153,7 +197,6 @@
         });grid.append(card);
       });updateCount();renderLibrary();
     }
-    [nameInput,venueInput,dateInput].forEach(input=>input.oninput=()=>{current.title=nameInput.value;current.venue=venueInput.value;current.date=dateInput.value;updateCount();persist()});
     function saveAs(){
       const proposed=current.title||"Új technikai rider";const title=prompt("Milyen néven mentsük a ridert?",proposed);if(!title)return false;
       current.id=crypto.randomUUID();current.title=title.trim()||proposed;current.updatedAt=now();db.riders.push(clone(current));persist();render();notice.textContent="Új rider elmentve.";return true;
