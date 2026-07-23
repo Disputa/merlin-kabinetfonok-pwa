@@ -130,6 +130,20 @@
         ["technical-staff","Műszaki és egyéb kiszolgáló személyzet","","missing",""],
         ["dressing-special","Speciális öltözőigények","","missing",""]
       ]],
+      ["Részletes szereposztás és közreműködők","A Mézesvölgyre összeállított név szerinti szereposztás és az ellenőrzendő közreműködői kör",[
+        ["cast-female-detail","Felnőtt női szereposztás","","missing",""],
+        ["cast-male-detail","Felnőtt férfi szereposztás","","missing",""],
+        ["children-detail","Gyerekszereplők – I. szereposztás","","missing",""],
+        ["ensemble-detail","További közreműködők / statisztéria","","missing",""]
+      ]],
+      ["Zenekar, színpadi stáb és alkotók","A zenekar, a tánc-/énekkari közreműködés és a színpadi-alkotói stáb",[
+        ["orchestra-detail","Zenekar","","missing",""],
+        ["choir-dance-detail","Tánc-/énekkari közreműködés","","missing",""],
+        ["stage-staff-detail","Ügyelő / súgó / segédrendező","","missing",""],
+        ["direction-music-detail","Rendezés és zenei vezetés","","missing",""],
+        ["creative-staff-detail","Alkotók","","missing",""],
+        ["service-staff-detail","Műszaki és kiszolgáló személyzet","","missing",""]
+      ]],
       ["Színpadtechnika","Szükséges színpadtér és alapvető technikai igények",[
         ["stage-width","Szükséges színpadszélesség (m)","","missing",""],
         ["stage-depth","Szükséges színpadmélység (m)","","missing",""],
@@ -171,7 +185,7 @@
     const makeBlank=()=>({id:null,title:"",venue:"",date:"",updatedAt:now(),sections:clone(schema)});
     const makeMuzsika=()=>{
       const r=makeBlank();
-      r.id="sample-muzsika-hangja-mezesvolgy";
+      r.id="sample-muzsika-hangja-mezesvolgy-v2";
       r.title="A muzsika hangja – Mézesvölgy";
       r.venue="Mézesvölgyi Nagyszínpad, Veresegyház (Búcsú tér)";
       r.date="2026-08-22";
@@ -184,51 +198,86 @@
       const officialCast="Szigligeti Színház – A muzsika hangja hivatalos előadásoldal (ellenőrizve: 2026.07.23.)";
       const mezesvolgyCast="Veres 1 Színház – A muzsika hangja, Mézesvölgy, 2026.08.22. hivatalos jegyoldal (ellenőrizve: 2026.07.23.)";
       const firstCast="Helyi dokumentum – listak_statiszteria_gyerekszereplok.docx, 1. szereposztás; összevetve a hivatalos színlappal";
+      const mezesvolgyTech="Helyi dokumentum – mezesvolgy_technikai_egyezteto.docx (módosítva: 2026.07.02.)";
+      const localCastList="Helyi dokumentum – listak_statiszteria_gyerekszereplok.docx; összevetve a hivatalos színlappal";
+      const soundOrder="Helyi dokumentum – A muzsika hangja - HANGBEÁLLÁSI REND_20260416.docx";
 
       set("theatre","Szolnoki Szigligeti Színház Nonprofit Kft.","filled",contract);
       set("author-title","Richard Rodgers (zene) – Oscar Hammerstein II (dalszöveg) – Howard Lindsay és Russel Crouse (szövegkönyv): A muzsika hangja – Mézesvölgy","filled",`${contract}; ${officialCast}`);
       set("performance-time","2026. augusztus 22., 20:00; esőnap: augusztus 23., 20:00","filled",contract);
-      set("contact","Giba Attila (fogadó): 06-70-3333-676; Ignácz György (Szigligeti): 06-30-955-8259","filled",contract);
+      set("contact","Farkas Irén: +36 30 299 2792; Giba Attila (fogadó): 06-70-3333-676; Ignácz György (Szigligeti): 06-30-955-8259","filled",`${contract}; ${mezesvolgyTech}`);
+      set("site-visit","Igen, külön egyeztetés alapján","filled",mezesvolgyTech);
 
-      set("duration","150 perc","filled",contract);
+      set("duration","145 perc","filled",mezesvolgyTech);
       set("acts","2 felvonás","filled",contract);
-      set("interval","1 szünet – pontos hossza egyeztetendő","verify",contract);
-      set("rehearsal-need","Igen","filled",travel);
-      set("rehearsal-time","2026. augusztus 22., 11:00","filled",travel);
-      set("rehearsal-duration","","verify","A próba kezdete ismert, időtartama nincs megadva.");
+      set("interval","20 perc","filled",mezesvolgyTech);
+      set("rehearsal-need","Igen","filled",mezesvolgyTech);
+      set("runthrough","Felújító próba","filled",mezesvolgyTech);
+      set("rehearsal-time","14:00","filled",mezesvolgyTech);
+      set("rehearsal-duration","4 óra","filled",mezesvolgyTech);
 
-      set("loadin-total-start","2026. augusztus 21., 10:00 / 16:30 – egyeztetendő","verify",`${contract}; ${travel}. A két forrás eltér.`);
-      set("set-build-start","2026. augusztus 21., 10:00 / 16:30 – egyeztetendő","verify",`${contract}; ${travel}. A két forrás eltér.`);
-      set("lighting-setup-start","2026. augusztus 21., 10:00 / 16:30 – egyeztetendő","verify",`${contract}; ${travel}. A két forrás eltér.`);
-      set("soundcheck-start","2026. augusztus 22., 10:00 / 16:00 – egyeztetendő","verify",`${travel}; ${scheduleChange}. A módosító levél 16:00-t ír.`);
-      set("soundcheck-duration","","verify","A hangbeállás kezdete forrásokban szerepel, időtartama nincs megadva.");
-      set("lighting-rig-start","2026. augusztus 21., 10:00 / 16:30 – egyeztetendő","verify",`${contract}; ${travel}. A két forrás eltér.`);
-      set("strike-start","Az előadás után – pontos időpont egyeztetendő","verify",travel);
+      set("loadin-total-duration","5 óra","filled",mezesvolgyTech);
+      set("loadin-total-start","09:00","filled",mezesvolgyTech);
+      set("set-build-duration","3 óra","filled",mezesvolgyTech);
+      set("set-build-start","09:00 – megerősítendő","verify",`${mezesvolgyTech}: a teljes beszerelés kezdete 09:00, a díszletépítés külön kezdete nincs megadva.`);
+      set("lighting-setup-duration","6 óra","filled",mezesvolgyTech);
+      set("lighting-setup-start","","verify",`${mezesvolgyTech}: külön világítási kezdés nincs megadva.`);
+      set("soundcheck-duration","2 óra","filled",mezesvolgyTech);
+      set("soundcheck-start","12:00","filled",mezesvolgyTech);
+      set("video-setup-duration","–","filled",mezesvolgyTech);
+      set("video-setup-start","–","filled",mezesvolgyTech);
+      set("lighting-rig-start","11:00","filled",mezesvolgyTech);
+      set("strike-duration","2 óra","filled",mezesvolgyTech);
+      set("strike-start","kb. 21:40","filled",mezesvolgyTech);
       set("technical-duty","Igen – helyi műszaki személyzet és ügyelet szükséges az építés, bontás és előadás alatt.","filled",contract);
 
       set("vehicle-type","17+1 fős mikrobusz; 51 fős autóbusz; saját gépkocsik; 1 díszletszállító gépjármű (típus egyeztetendő)","verify",`${travel}; ${contract}`);
       set("vehicle-plate","","verify","A források nem tartalmaznak rendszámot.");
       set("vehicle-mass","","verify","A szerződéstervezetben a díszletszállító gépjármű tonnaadata kitöltetlen.");
-      set("vehicle-arrival","","verify","Az indulási és szerelési idők ismertek, a járművek pontos érkezési ideje nincs rögzítve.");
+      set("vehicle-arrival","Járművenként későbbi egyeztetés","verify",mezesvolgyTech);
 
-      set("arrival-scenery","2026. augusztus 21.; szerelés/pakolás/világításpróba 16:30-kor. A szerződéstervezet 10:00-s helyszínátadást ír – egyeztetendő.","verify",`${travel}; ${contract}`);
-      set("arrival-tech","2026. augusztus 21.; 8 díszítő, 2 hangosító, Ignácz György; a világosítók saját gépkocsival. Pontos érkezés egyeztetendő.","verify",travel);
-      set("arrival-dressers","2026. augusztus 22.; 6 öltöztető, 2 fodrász, 1 kellékes. Pontos érkezés egyeztetendő.","verify",travel);
-      set("arrival-artists","2026. augusztus 22.; művészek, zenészek és gyerekek 51 fős autóbusszal. Pontos érkezés egyeztetendő.","verify",travel);
+      set("arrival-scenery","09:00 a mézesvölgyi egyeztető szerint; az utazási terv 2026. augusztus 21. 16:30-at jelöl – véglegesítendő.","verify",`${mezesvolgyTech}; ${travel}`);
+      set("arrival-tech","09:00 a mézesvölgyi egyeztető szerint; az utazási terv 2026. augusztus 21. 16:30-at jelöl – véglegesítendő.","verify",`${mezesvolgyTech}; ${travel}`);
+      set("arrival-dressers","13:00; tervezett nap: 2026. augusztus 22. (6 öltöztető, 2 fodrász, 1 kellékes).","filled",`${mezesvolgyTech}; ${travel}`);
+      set("arrival-artists","13:00; tervezett nap: 2026. augusztus 22.; művészek, zenészek és gyerekek 51 fős autóbusszal.","filled",`${mezesvolgyTech}; ${travel}`);
 
-      set("female-cast","6 felnőtt női szereplő; Liesl szerepében a mézesvölgyi előadáson Megyesi Pálma.","filled",`${contract}; ${officialCast}; ${mezesvolgyCast}; munkahelyi Gmail – A muzsika hangja felvétel Megyesi Pálmának (2026.07.01.)`);
-      set("male-cast","6 felnőtt férfi szereplő","filled",`${contract}; ${officialCast}`);
-      set("group-female","4 fő – Louisa: Fenyővári Nikolett; Brigitta: Lipták Blanka; Marta: Bozsó Linda Bella; Gretl: Koszta Hanna","filled",`${firstCast}; ${officialCast}`);
-      set("group-male","2 fő – Friedrich: Varga Csanád; Kurt: Kovács Bendegúz","verify",`${firstCast}; ${officialCast}. Névellenőrzés: a helyi lista „Varga Conrad”, a hivatalos színlap „Varga Csanád” nevet közöl; a riderben a hivatalos alak szerepel.`);
-      set("orchestra","","verify",`${scheduleChange}: zenekaros előadás, a zenekar 16:00-kor érkezik; pontos létszám nincs megadva.`);
-      set("technical-staff","UTAZÁSOK: 15 fő (8 díszítő, 2 hangosító, 4 világosító, Ignácz György). Szálláslevél: 12 fő (4 világosító, 2 hangosító, 4 díszítő, 1 rendező, 1 segédrendező). Egyeztetendő.","verify",`${travel}; ${lodging}. A két létszám eltér.`);
-      set("dressing-special","A produkció részére öltözők; a díszítőknek külön pihenőhelyiség szükséges.","filled",contract);
+      set("female-cast","8 fő az előzetes mézesvölgyi technikai egyeztetőben; a név szerinti szereposztás alapján 10 fő (6 felnőtt + 4 lány) – EGYEZTETENDŐ.","verify",`${mezesvolgyTech}; ${officialCast}; ${mezesvolgyCast}; ${firstCast}`);
+      set("male-cast","10 fő az előzetes mézesvölgyi technikai egyeztetőben; a név szerinti szereposztás alapján 8 fő (6 felnőtt + 2 fiú) – EGYEZTETENDŐ.","verify",`${mezesvolgyTech}; ${officialCast}; ${mezesvolgyCast}; ${firstCast}`);
+      set("group-female","Nincs külön megadva; a hivatalos színlapon 8 további női közreműködő szerepel – mézesvölgyi részvétel és tánc-/énekkari bontás EGYEZTETENDŐ.","verify",`${mezesvolgyTech}; ${officialCast}`);
+      set("group-male","Nincs külön megadva; a hivatalos színlapon 3 további férfi közreműködő szerepel – mézesvölgyi részvétel és tánc-/énekkari bontás EGYEZTETENDŐ.","verify",`${mezesvolgyTech}; ${officialCast}`);
+      set("orchestra","1 fő az előzetes mézesvölgyi technikai egyeztető szerint; zenei vezető/karmester: Gulyás Gergely; a pontos létszám és hangszerösszetétel EGYEZTETENDŐ.","verify",`${mezesvolgyTech}; ${soundOrder}; ${scheduleChange}`);
+      set("technical-staff","30 fő az előzetes mézesvölgyi technikai egyeztető szerint. Utazási bontás: 8 díszítő, 2 hangosító, 4 világosító, Ignácz György; továbbá 6 öltöztető, 2 fodrász és 1 kellékes. A teljes névsor és az eltérő utazási/szálláslétszámok EGYEZTETENDŐK.","verify",`${mezesvolgyTech}; ${travel}; ${lodging}`);
+      set("dressing-special","Nincs külön megadott igény; a díszítőknek a szerződés szerint külön pihenőhelyiség szükséges.","verify",`${mezesvolgyTech}; ${contract}`);
 
-      set("stage-height","5 m hasznos belmagasság","filled",contract);
+      set("cast-female-detail","Maria – Molnár Nikolett; Apátnő – Kertész Marcella; Elsa Schraeder / Berthe nővér – Sárvári Diána; Liesl – Megyesi Pálma; Frau Schmidt / Margaretta nővér – Lugosi Claudia; Sophia nővér / Elberfeld bárónő – Kerényi Tünde Sára.","filled",`${mezesvolgyCast}; ${officialCast}`);
+      set("cast-male-detail","Georg von Trapp – Barabás Botond; Max Detweiler – Ónodi Gábor; Rolf Gruber – Dósa Mátyás; Herr Zeller – Zelei Gábor; Franz, komornyik – Tárnai Attila; Elberfeld / von Schreiber – Kinczel József.","filled",`${mezesvolgyCast}; ${officialCast}`);
+      set("children-detail","Friedrich – Varga Csanád; Louisa – Fenyővári Nikolett; Kurt – Kovács Bendegúz; Brigitta – Lipták Blanka; Marta – Bozsó Linda Bella; Gretl – Koszta Hanna.","filled",`${firstCast}; ${officialCast}`);
+      set("ensemble-detail","Boda Beáta; Kis Zsuzsa; Nagy Réka; Szatmári Beáta; Deme Gábor; Szabó Lóránd; Bana Zoé; Illyés Boglárka; Kiszelák Lenke; Pintér Mónika Mária; Baka Ádám. Szerepkör: posztulánsok, katonák, bálozók. Mézesvölgyi részvételük EGYEZTETENDŐ. A helyi munkalistán Juhász Bálint is szerepel – EGYEZTETENDŐ.","verify",`${officialCast}; ${localCastList}`);
+
+      set("orchestra-detail","1 fő az előzetes mézesvölgyi technikai egyeztető szerint. Zenei vezető, karmester és hangszerelő: Gulyás Gergely. A tényleges utazó létszám, névsor és hangszerösszetétel EGYEZTETENDŐ.","verify",`${mezesvolgyTech}; ${soundOrder}; ${officialCast}`);
+      set("choir-dance-detail","A produkcióban apácák/kórus és koreografált jelenetek szerepelnek; külön tánckari és énekkari létszám nincs hitelesen megadva. EGYEZTETENDŐ.","verify",`${soundOrder}; ${officialCast}`);
+      set("stage-staff-detail","Ügyelő: Besenyi Anna; súgó: Auer Edit; segédrendező: Kinczel József.","filled",officialCast);
+      set("direction-music-detail","Rendező: Pányik Tamás; zenei vezető, karmester és hangszerelő: Gulyás Gergely; koreográfus: Barta Viktória; korrepetitor: Rimóczi Mónika.","filled",officialCast);
+      set("creative-staff-detail","Magyar szöveg, dramaturg: Kerényi Tünde Sára; magyar dalszöveg: Cseh Dávid Péter; díszlettervező: Árva Nóra; jelmeztervező: Rákay Tamás.","filled",officialCast);
+      set("service-staff-detail","30 fő az előzetes mézesvölgyi technikai egyeztető szerint. Ismert bontás: 8 díszítő, 2 hangosító, 4 világosító, Ignácz György; 6 öltöztető, 2 fodrász, 1 kellékes. A 30 fős teljes keret és az utazási/szálláslisták eltérése EGYEZTETENDŐ.","verify",`${mezesvolgyTech}; ${travel}; ${lodging}`);
+
+      set("stage-width","10 méter","filled",mezesvolgyTech);
+      set("stage-depth","14 méter","filled",mezesvolgyTech);
+      set("stage-height","6 méter","filled",mezesvolgyTech);
+      set("ballet-floor","Igen – Visszük","filled",mezesvolgyTech);
+      set("revolve","Nem","filled",mezesvolgyTech);
+      set("masking","Igen","filled",mezesvolgyTech);
+      set("risers","Igen – Visszük","filled",mezesvolgyTech);
       set("stage-other","A színpad teljes alapterülete szükséges; biztosítani kell a díszlet padlóhoz rögzítését és a szabad be-/kihordási útvonalat.","filled",contract);
-      set("lighting-inventory","A helyszín beépített világítástechnikája; a pontos lámpapark egyeztetendő.","verify",contract);
-      set("wireless","Mikroportos hangosítás szükséges; a pontos darabszám egyeztetendő.","verify",contract);
-      set("sound-other","A hang- és fénypult helye a nézőtéren, lehetőleg közvetlenül az utolsó sor mögött.","filled",contract);
+      set("smoke","Igen","filled",mezesvolgyTech);
+      set("lighting-inventory","Későbbi egyeztetés","verify",mezesvolgyTech);
+      set("lighting-special","–","filled",mezesvolgyTech);
+      set("wireless","20 mikroport","filled",mezesvolgyTech);
+      set("monitors","3 monitorút, 5 hangsugárzó","filled",mezesvolgyTech);
+      set("effects","Saját – visszük","filled",mezesvolgyTech);
+      set("sound-other","Bejátszó és hangpult: saját, visszük. A pult helye a nézőtéren, lehetőleg közvetlenül az utolsó sor mögött.","filled",`${mezesvolgyTech}; ${contract}`);
+      set("pyro","Nem","filled",mezesvolgyTech);
+      set("fire","Nem","filled",mezesvolgyTech);
 
       set("legal-name","Szolnoki Szigligeti Színház Nonprofit Kft.","filled",contract);
       set("registered-office","5000 Szolnok, Táncsics Mihály utca 20.","filled",contract);
@@ -240,23 +289,87 @@
       set("technical-contact","Szigligeti: Ignácz György, 06-30-955-8259, igigyuri@gmail.com; fogadó: Giba Attila, 06-70-3333-676, gibati@gmail.com","filled",contract);
       return r;
     };
+    const sampleIds=new Set(["sample-muzsika-hangja","sample-muzsika-hangja-mezesvolgy","sample-muzsika-hangja-mezesvolgy-v2"]);
+    const legacyFieldValues=new Map(Object.entries({
+      "duration":"150 perc",
+      "interval":"1 szünet – pontos hossza egyeztetendő",
+      "rehearsal-need":"Igen",
+      "rehearsal-time":"2026. augusztus 22., 11:00",
+      "loadin-total-start":"2026. augusztus 21., 10:00 / 16:30 – egyeztetendő",
+      "set-build-start":"2026. augusztus 21., 10:00 / 16:30 – egyeztetendő",
+      "lighting-setup-start":"2026. augusztus 21., 10:00 / 16:30 – egyeztetendő",
+      "soundcheck-start":"2026. augusztus 22., 10:00 / 16:00 – egyeztetendő",
+      "lighting-rig-start":"2026. augusztus 21., 10:00 / 16:30 – egyeztetendő",
+      "strike-start":"Az előadás után – pontos időpont egyeztetendő",
+      "arrival-scenery":"2026. augusztus 21.; szerelés/pakolás/világításpróba 16:30-kor. A szerződéstervezet 10:00-s helyszínátadást ír – egyeztetendő.",
+      "arrival-tech":"2026. augusztus 21.; 8 díszítő, 2 hangosító, Ignácz György; a világosítók saját gépkocsival. Pontos érkezés egyeztetendő.",
+      "arrival-dressers":"2026. augusztus 22.; 6 öltöztető, 2 fodrász, 1 kellékes. Pontos érkezés egyeztetendő.",
+      "arrival-artists":"2026. augusztus 22.; művészek, zenészek és gyerekek 51 fős autóbusszal. Pontos érkezés egyeztetendő.",
+      "female-cast":"6 felnőtt női szereplő; Liesl szerepében a mézesvölgyi előadáson Megyesi Pálma.",
+      "male-cast":"6 felnőtt férfi szereplő",
+      "group-female":"4 fő – Louisa: Fenyővári Nikolett; Brigitta: Lipták Blanka; Marta: Bozsó Linda Bella; Gretl: Koszta Hanna",
+      "group-male":"2 fő – Friedrich: Varga Csanád; Kurt: Kovács Bendegúz",
+      "technical-staff":"UTAZÁSOK: 15 fő (8 díszítő, 2 hangosító, 4 világosító, Ignácz György). Szálláslevél: 12 fő (4 világosító, 2 hangosító, 4 díszítő, 1 rendező, 1 segédrendező). Egyeztetendő.",
+      "stage-height":"5 m hasznos belmagasság",
+      "lighting-inventory":"A helyszín beépített világítástechnikája; a pontos lámpapark egyeztetendő.",
+      "wireless":"Mikroportos hangosítás szükséges; a pontos darabszám egyeztetendő.",
+      "sound-other":"A hang- és fénypult helye a nézőtéren, lehetőleg közvetlenül az utolsó sor mögött."
+    }));
+    const fillIfBlank=new Set([
+      "site-visit","runthrough","rehearsal-duration","loadin-total-duration","set-build-duration",
+      "lighting-setup-duration","soundcheck-duration","video-setup-duration","video-setup-start",
+      "strike-duration","vehicle-arrival","orchestra","stage-width","stage-depth","ballet-floor",
+      "revolve","masking","risers","smoke","lighting-special","monitors","effects","pyro","fire"
+    ]);
+    function isMuzsikaRider(rider){
+      return !!rider&&(sampleIds.has(rider.id)||String(rider.title||"").toLocaleLowerCase("hu-HU").includes("muzsika hangja"));
+    }
+    function mergeWithSchema(rider){
+      if(!rider?.sections)return makeBlank();
+      const systemSample=sampleIds.has(rider.id);
+      const related=isMuzsikaRider(rider);
+      const base=related?makeMuzsika():makeBlank();
+      ["id","title","venue","date","updatedAt"].forEach(key=>{if(rider[key]!==undefined&&rider[key]!==null)base[key]=rider[key]});
+      if(systemSample)base.id="sample-muzsika-hangja-mezesvolgy-v2";
+      const existing=new Map(rider.sections.flatMap(section=>section[2]||[]).map(field=>[field[0],field]));
+      base.sections.forEach(section=>section[2].forEach(field=>{
+        const previous=existing.get(field[0]);
+        if(!previous)return;
+        const value=String(previous[2]??"");
+        const unchangedLegacy=systemSample&&legacyFieldValues.get(field[0])===value;
+        const formerlyBlank=systemSample&&fillIfBlank.has(field[0])&&!value.trim();
+        if(unchangedLegacy||formerlyBlank)return;
+        field[2]=value.replace(/^Iegn\b/,"Igen");
+        field[3]=previous[3]||field[3];
+        field[4]=previous[4]||field[4];
+      }));
+      return base;
+    }
+    function normalizeDatabase(raw){
+      const preserved=(Array.isArray(raw?.riders)?raw.riders:[])
+        .filter(rider=>!sampleIds.has(rider?.id))
+        .map(mergeWithSchema);
+      return {
+        riders:[makeMuzsika(),...preserved],
+        draft:mergeWithSchema(raw?.draft||makeBlank())
+      };
+    }
     let db={riders:[makeMuzsika()],draft:makeBlank()};
     try{
       const stored=localStorage.getItem(DB_KEY);
       if(stored){
-        db=JSON.parse(stored);
+        db=normalizeDatabase(JSON.parse(stored));
       }else{
         const previous=localStorage.getItem(PREVIOUS_DB_KEY);
         if(previous){
-          const legacy=JSON.parse(previous);
-          const oldSampleIds=new Set(["sample-muzsika-hangja","sample-muzsika-hangja-mezesvolgy"]);
-          const preserved=(Array.isArray(legacy.riders)?legacy.riders:[]).filter(r=>!oldSampleIds.has(r.id));
-          const draft=legacy.draft&&!oldSampleIds.has(legacy.draft.id)?legacy.draft:makeBlank();
-          db={riders:[makeMuzsika(),...preserved],draft};
-          localStorage.setItem(DB_KEY,JSON.stringify(db));
+          db=normalizeDatabase(JSON.parse(previous));
         }
       }
-    }catch{localStorage.removeItem(DB_KEY)}
+      localStorage.setItem(DB_KEY,JSON.stringify(db));
+    }catch{
+      localStorage.removeItem(DB_KEY);
+      db={riders:[makeMuzsika()],draft:makeBlank()};
+    }
     let current=clone(db.draft||makeBlank());
     const $=s=>document.querySelector(s),grid=$("#grid"),list=$("#saved-list"),notice=$("#notice"),count=$("#count");
     function persist(){db.draft=clone(current);localStorage.setItem(DB_KEY,JSON.stringify(db))}
@@ -344,6 +457,11 @@
       if(normalized.startsWith("n"))return ["","x"];
       return [value,""];
     }
+    function needAndSupply(value){
+      if(!value.trim())return ["",""];
+      const parts=value.split(/\s+[–-]\s+/);
+      return [parts[0]||"",parts.slice(1).join(" – ")];
+    }
     let pendingDocxUrl="";
     function offerDocxDownload(blob,name){
       if(pendingDocxUrl)URL.revokeObjectURL(pendingDocxUrl);
@@ -390,15 +508,22 @@
         setParagraph(xml,"Érkezés időpontja:",fieldValue("vehicle-arrival"));
         [["arrival-scenery",0],["arrival-tech",1],["arrival-dressers",2],["arrival-artists",3]].forEach(([id,row])=>setCell(tables,7,row,1,fieldValue(id)));
         [["female-cast",0],["male-cast",1],["dressing-special",2],["group-female",3],["group-male",4],["orchestra",5],["technical-staff",6]].forEach(([id,row])=>setCell(tables,8,row,1,fieldValue(id)));
+        [["cast-female-detail",0],["cast-male-detail",1],["children-detail",2],["ensemble-detail",3]].forEach(([id,row])=>setCell(tables,9,row,1,fieldValue(id)));
+        [["orchestra-detail",0],["choir-dance-detail",1],["stage-staff-detail",2],["direction-music-detail",3],["creative-staff-detail",4],["service-staff-detail",5]].forEach(([id,row])=>setCell(tables,10,row,1,fieldValue(id)));
 
-        setCell(tables,9,2,1,fieldValue("stage-width"));
-        setCell(tables,9,2,2,fieldValue("stage-depth"));
-        setCell(tables,9,2,3,fieldValue("stage-height"));
-        [["ballet-floor",3],["revolve",4],["masking",5],["risers",6],["stage-other",7]].forEach(([id,row])=>setCell(tables,9,row,1,fieldValue(id)));
-        [["smoke",0],["lighting-inventory",1],["lighting-special",2]].forEach(([id,row])=>setCell(tables,10,row,1,fieldValue(id)));
-        [["wireless",0],["monitors",1],["effects",2],["sound-other",3]].forEach(([id,row])=>setCell(tables,11,row,1,fieldValue(id)));
-        [["pyro",1],["fire",2]].forEach(([id,row])=>{const marks=yesNo(fieldValue(id));setCell(tables,12,row,1,marks[0]);setCell(tables,12,row,2,marks[1])});
-        [["legal-name",0],["registered-office",1],["tax",2],["registry",3],["bank",4],["representative",5],["general-contact",6],["technical-contact",7]].forEach(([id,row])=>setCell(tables,13,row,1,fieldValue(id)));
+        setCell(tables,11,2,1,fieldValue("stage-width"));
+        setCell(tables,11,2,2,fieldValue("stage-depth"));
+        setCell(tables,11,2,3,fieldValue("stage-height"));
+        [["ballet-floor",3],["revolve",4],["masking",5],["risers",6]].forEach(([id,row])=>{
+          const values=needAndSupply(fieldValue(id));
+          setCell(tables,11,row,1,values[0]);
+          setCell(tables,11,row,2,values[1]);
+        });
+        setCell(tables,11,7,1,fieldValue("stage-other"));
+        [["smoke",0],["lighting-inventory",1],["lighting-special",2]].forEach(([id,row])=>setCell(tables,12,row,1,fieldValue(id)));
+        [["wireless",0],["monitors",1],["effects",2],["sound-other",3]].forEach(([id,row])=>setCell(tables,13,row,1,fieldValue(id)));
+        [["pyro",1],["fire",2]].forEach(([id,row])=>{const marks=yesNo(fieldValue(id));setCell(tables,14,row,1,marks[0]);setCell(tables,14,row,2,marks[1])});
+        [["legal-name",0],["registered-office",1],["tax",2],["registry",3],["bank",4],["representative",5],["general-contact",6],["technical-contact",7]].forEach(([id,row])=>setCell(tables,15,row,1,fieldValue(id)));
 
         zip.file("word/document.xml",new XMLSerializer().serializeToString(xml));
         const blob=await zip.generateAsync({type:"blob",mimeType:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"});
@@ -420,7 +545,7 @@
     $("#delete").onclick=()=>{const r=db.riders.find(x=>x.id===list.value);if(!r||!confirm(`Biztosan törlöd: ${r.title||"Névtelen rider"}?`))return;db.riders=db.riders.filter(x=>x.id!==r.id);if(current.id===r.id)current=makeBlank();persist();notice.textContent="A mentett rider törölve.";render()};
     $("#export-docx").onclick=()=>void exportFilledDocx();
     $("#export").onclick=()=>{const payload={format:"szigligeti-rider",version:1,exportedAt:now(),rider:current};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${(current.title||"technikai-rider").replace(/[^\p{L}\p{N}]+/gu,"-").replace(/^-|-$/g,"").toLowerCase()}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);notice.textContent="A rider exportálva."};
-    $("#import-file").onchange=async e=>{const file=e.target.files[0];e.target.value="";if(!file)return;try{const parsed=JSON.parse(await file.text());if(parsed.format!=="szigligeti-rider"||!parsed.rider?.sections)throw new Error();current=clone(parsed.rider);current.id=null;notice.textContent="Rider importálva. A végleges mentéshez kattints a Mentés gombra.";persist();render()}catch{alert("Ez nem érvényes Szigligeti technikai rider export.")}};
+    $("#import-file").onchange=async e=>{const file=e.target.files[0];e.target.value="";if(!file)return;try{const parsed=JSON.parse(await file.text());if(parsed.format!=="szigligeti-rider"||!parsed.rider?.sections)throw new Error();current=mergeWithSchema(parsed.rider);current.id=null;notice.textContent="Rider importálva. A végleges mentéshez kattints a Mentés gombra.";persist();render()}catch{alert("Ez nem érvényes Szigligeti technikai rider export.")}};
     render();
   </script>
 </body>
