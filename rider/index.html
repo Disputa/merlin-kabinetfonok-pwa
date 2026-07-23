@@ -54,7 +54,8 @@
     <div class="toolbar">
       <button id="new">Új üres rider</button>
       <button class="primary" id="save">Mentés</button>
-      <button class="primary" id="export-docx">Eredeti Szigligeti DOCX</button>
+      <button class="primary" id="export-docx" title="A most látható, kitöltött adatokat tölti az eredeti Szigligeti Word-sablonba.">Kitöltött Word (.docx) letöltése</button>
+      <a class="file-button hidden" id="docx-ready">Word-fájl letöltése</a>
       <button id="export">Biztonsági mentés (.json)</button>
       <label class="file-button" for="import-file">Importálás</label>
       <input class="hidden" id="import-file" type="file" accept="application/json,.json">
@@ -67,7 +68,7 @@
       <span class="tag missing">Hiányzik</span>
     </div>
     <section class="grid" id="grid"></section>
-    <p class="footer">A mentett riderek ezen az eszközön, a böngésző tárhelyén maradnak. Az „Eredeti Szigligeti DOCX” az üres, hivatalos technikai egyeztető teljes eredeti elrendezését tölti ki; a hiányzó mezők üresen maradnak. PDF-et és nyomtatást ebből a Word-fájlból érdemes készíteni. A JSON-export kizárólag adatbiztonsági mentés.</p>
+    <p class="footer">A mentett riderek ezen az eszközön, a böngésző tárhelyén maradnak. A „Kitöltött Word (.docx) letöltése” a most látható adatokat írja bele a hivatalos, logós Szigligeti technikai egyeztető eredeti elrendezésébe; a hiányzó mezők üresen maradnak. Ha a böngésző nem indítja el automatikusan a letöltést, megjelenik egy külön „Word-fájl letöltése” gomb. A JSON-export kizárólag adatbiztonsági mentés.</p>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
@@ -343,8 +344,18 @@
       if(normalized.startsWith("n"))return ["","x"];
       return [value,""];
     }
-    async function exportOriginalDocx(){
-      const button=$("#export-docx");button.disabled=true;notice.textContent="Az eredeti logós DOCX készül…";
+    let pendingDocxUrl="";
+    function offerDocxDownload(blob,name){
+      if(pendingDocxUrl)URL.revokeObjectURL(pendingDocxUrl);
+      pendingDocxUrl=URL.createObjectURL(blob);
+      const ready=$("#docx-ready");
+      ready.href=pendingDocxUrl;
+      ready.download=name;
+      ready.classList.remove("hidden");
+      ready.click();
+    }
+    async function exportFilledDocx(){
+      const button=$("#export-docx");button.disabled=true;notice.textContent="A kitöltött Word-fájl készül…";
       try{
         if(!window.JSZip)throw new Error("A DOCX-kezelő nem töltődött be.");
         const response=await fetch("./szigligeti-technikai-egyezteto-sablon.docx");
@@ -391,8 +402,8 @@
 
         zip.file("word/document.xml",new XMLSerializer().serializeToString(xml));
         const blob=await zip.generateAsync({type:"blob",mimeType:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"});
-        downloadBlob(blob,safeFileName("docx"));
-        notice.textContent="Az eredeti Szigligeti DOCX elkészült.";
+        offerDocxDownload(blob,safeFileName("docx"));
+        notice.textContent="A kitöltött Word-fájl elkészült. Ha nem indult el automatikusan, kattints a „Word-fájl letöltése” gombra.";
       }catch(error){
         notice.textContent="A DOCX-export nem sikerült.";
         alert(error instanceof Error?error.message:"A DOCX-export nem sikerült.");
@@ -407,7 +418,7 @@
     $("#duplicate").onclick=()=>saveAs();
     $("#open").onclick=()=>{const r=db.riders.find(x=>x.id===list.value);if(!r)return;current=clone(r);persist();notice.textContent="Mentett rider megnyitva.";render()};
     $("#delete").onclick=()=>{const r=db.riders.find(x=>x.id===list.value);if(!r||!confirm(`Biztosan törlöd: ${r.title||"Névtelen rider"}?`))return;db.riders=db.riders.filter(x=>x.id!==r.id);if(current.id===r.id)current=makeBlank();persist();notice.textContent="A mentett rider törölve.";render()};
-    $("#export-docx").onclick=()=>void exportOriginalDocx();
+    $("#export-docx").onclick=()=>void exportFilledDocx();
     $("#export").onclick=()=>{const payload={format:"szigligeti-rider",version:1,exportedAt:now(),rider:current};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${(current.title||"technikai-rider").replace(/[^\p{L}\p{N}]+/gu,"-").replace(/^-|-$/g,"").toLowerCase()}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);notice.textContent="A rider exportálva."};
     $("#import-file").onchange=async e=>{const file=e.target.files[0];e.target.value="";if(!file)return;try{const parsed=JSON.parse(await file.text());if(parsed.format!=="szigligeti-rider"||!parsed.rider?.sections)throw new Error();current=clone(parsed.rider);current.id=null;notice.textContent="Rider importálva. A végleges mentéshez kattints a Mentés gombra.";persist();render()}catch{alert("Ez nem érvényes Szigligeti technikai rider export.")}};
     render();
