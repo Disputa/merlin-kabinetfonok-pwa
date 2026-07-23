@@ -1,4 +1,4 @@
-const CACHE_NAME = "merlin-shell-v3";
+const CACHE_NAME = "merlin-shell-v4";
 const APP_BASE = new URL("./", self.registration.scope).pathname;
 const appAsset = (name = "") => `${APP_BASE}${name}`;
 const APP_SHELL = [
