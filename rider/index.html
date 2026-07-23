@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#07111d">
+  <title>Szolnoki Szigligeti Színház – Technikai Egyeztető</title>
+  <style>
+    :root{--bg:#07111d;--panel:#101d2d;--panel2:#15253a;--text:#f5f1e7;--muted:#9cabbc;--line:#2a394b;--gold:#e5c66f;--green:#75b29e;--red:#ef8b7d;--yellow:#e4bd62}
+    *{box-sizing:border-box}html{background:var(--bg)}body{margin:0;min-height:100vh;color:var(--text);background:radial-gradient(circle at 85% -10%,#203a55 0,transparent 40%),var(--bg);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+    button,input,textarea,select{font:inherit}.shell{width:min(1280px,100%);margin:auto;padding:26px clamp(14px,4vw,44px) 72px}
+    .hero{display:flex;justify-content:space-between;align-items:center;gap:24px;margin-bottom:18px}.eyebrow{margin:0 0 8px;color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+    h1{max-width:820px;margin:0;font:500 clamp(29px,4.5vw,50px)/1.05 Georgia,serif}.lead{max-width:760px;margin:12px 0 0;color:var(--muted);line-height:1.55}
+    .progress{min-width:154px;padding:20px;border:1px solid #e5c66f48;border-radius:20px;background:#e5c66f12;text-align:center}.progress strong{display:block;color:var(--gold);font:500 30px Georgia,serif}.progress span{color:var(--muted);font-size:12px}
+    .library{padding:16px;margin-bottom:14px;border:1px solid var(--line);border-radius:18px;background:#101d2dcf}.library-row{display:grid;grid-template-columns:minmax(220px,1fr) auto auto auto;gap:9px;align-items:end}
+    label.caption{display:grid;gap:6px;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}.library select{width:100%;min-height:43px;padding:0 12px;border:1px solid var(--line);border-radius:11px;color:var(--text);background:var(--panel2)}
+    .toolbar{position:sticky;top:0;z-index:10;display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin-bottom:17px;padding:11px 0;background:linear-gradient(var(--bg) 76%,transparent)}
+    button,.file-button{min-height:43px;padding:0 16px;display:inline-flex;align-items:center;justify-content:center;border-radius:12px;border:1px solid var(--line);color:var(--text);background:#ffffff0b;cursor:pointer;text-decoration:none}
+    .primary{border-color:var(--gold);color:#152033;background:var(--gold);font-weight:750}.danger{color:#f4a99f}.toolbar small{margin-left:auto;color:var(--muted)}
+    .document-head{display:grid;grid-template-columns:2fr 1.1fr 1.1fr;gap:11px;margin-bottom:16px;padding:17px;border:1px solid var(--line);border-radius:18px;background:#101d2dcc}.document-head label{display:grid;gap:6px;color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase}.document-head input{width:100%;min-height:44px;padding:0 12px;border:1px solid var(--line);border-radius:10px;color:var(--text);background:#050d1770}
+    .legend{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 17px}.tag{padding:6px 10px;border-radius:999px;font-size:11px;border:1px solid var(--line)}.tag.filled{color:#a8d6c7;border-color:#75b29e66}.tag.verify{color:#f3d98b;border-color:#e4bd6266}.tag.missing{color:#f2a99f;border-color:#ef8b7d66}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{padding:20px;border:1px solid var(--line);border-radius:20px;background:#101d2de8;box-shadow:0 18px 55px #0002}.card h2{margin:0;font:500 22px Georgia,serif}.card>p{margin:6px 0 17px;color:var(--muted);font-size:13px;line-height:1.45}
+    .fields{display:grid;gap:11px}.field{padding:12px;border:1px solid var(--line);border-left:4px solid var(--red);border-radius:13px;background:#ffffff05}.field.filled{border-left-color:var(--green)}.field.verify,.field.inferred{border-left-color:var(--yellow)}
+    .field-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.field-head strong{font-size:13px}.field select{max-width:180px;padding:6px 8px;border:1px solid var(--line);border-radius:9px;color:var(--text);background:var(--panel2);font-size:11px}
+    .field textarea{width:100%;min-height:62px;margin-top:8px;padding:10px;border:1px solid #ffffff12;border-radius:9px;resize:vertical;color:var(--text);background:#050d1770;line-height:1.45}.field textarea::placeholder{color:#a17572}.field small{display:block;margin-top:6px;color:#77899b;font-size:11px}
+    .footer{margin-top:24px;padding:18px;border:1px solid var(--line);border-radius:16px;color:var(--muted);font-size:12px;line-height:1.55}.hidden{display:none!important}
+    @media(max-width:820px){.shell{padding-top:18px}.hero{align-items:stretch;flex-direction:column}.progress{display:flex;align-items:baseline;justify-content:center;gap:8px;padding:14px}.progress strong{display:inline}.library-row{grid-template-columns:1fr 1fr}.library-row label{grid-column:1/-1}.toolbar small{width:100%;margin:0}.document-head,.grid{grid-template-columns:1fr}.card{padding:16px}.field-head{align-items:stretch;flex-direction:column}.field select{max-width:none}}
+    @media(max-width:500px){.library-row{grid-template-columns:1fr}.library-row label{grid-column:auto}.library-row button{width:100%}.toolbar>*{flex:1 1 135px}.toolbar small{flex-basis:100%}}
+    @media print{body{color:#111;background:#fff}.shell{width:100%;padding:0}.library,.toolbar,.legend{display:none!important}.hero{margin-bottom:12px}.hero .lead,.progress span,.card>p,.field small{color:#444}.document-head,.progress,.card,.field{break-inside:avoid;border-color:#aaa;color:#111;background:#fff;box-shadow:none}.grid{gap:10px}.document-head input,.field textarea,.field select{border-color:#bbb;color:#111;background:#fff}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Szolnoki Szigligeti Színház</p>
+        <h1>Technikai Egyeztető</h1>
+        <p class="lead">Új, üres rider készítése vagy korábban mentett technikai egyeztető visszanyitása és folytatása. A piros mezők hiányoznak, a sárgák ellenőrzést kérnek.</p>
+      </div>
+      <div class="progress"><strong id="count">0/0</strong><span>mező kitöltve</span></div>
+    </section>
+
+    <section class="library" aria-label="Mentett riderek">
+      <div class="library-row">
+        <label class="caption">Mentett riderek
+          <select id="saved-list" aria-label="Mentett rider kiválasztása"></select>
+        </label>
+        <button id="open">Megnyitás</button>
+        <button id="duplicate">Mentés másként</button>
+        <button class="danger" id="delete">Törlés</button>
+      </div>
+    </section>
+
+    <div class="toolbar">
+      <button id="new">Új üres rider</button>
+      <button class="primary" id="save">Mentés</button>
+      <button id="export">Exportálás</button>
+      <label class="file-button" for="import-file">Importálás</label>
+      <input class="hidden" id="import-file" type="file" accept="application/json,.json">
+      <button id="print">Nyomtatás / PDF</button>
+      <small id="notice">Új, még nem mentett rider.</small>
+    </div>
+
+    <section class="document-head">
+      <label>Előadás neve<input id="rider-name" placeholder="Például: A muzsika hangja"></label>
+      <label>Helyszín<input id="rider-venue" placeholder="Helyszín"></label>
+      <label>Előadás dátuma<input id="rider-date" type="date"></label>
+    </section>
+
+    <div class="legend">
+      <span class="tag filled">Kitöltve</span>
+      <span class="tag verify">Ellenőrzendő / következtetett</span>
+      <span class="tag missing">Hiányzik</span>
+    </div>
+    <section class="grid" id="grid"></section>
+    <p class="footer">A mentett riderek ezen az eszközön, a böngésző tárhelyén maradnak. Az Exportálás biztonsági másolatot készít, amely később visszaimportálható. A Nyomtatás / PDF gombbal szabványos, továbbküldhető dokumentum készíthető.</p>
+  </main>
+
+  <script>
+    const DB_KEY="szigligeti-technikai-egyezteto-v1";
+    const labels={filled:"Kitöltve",inferred:"Forrásból következtetett",verify:"Ellenőrzendő",missing:"Hiányzik"};
+    const schema=[
+      ["Alapadatok","Az előadás és a vendégjáték alapvető adatai",[
+        ["company","Fogadó színház / rendezvény","","missing",""],["contact","Technikai kapcsolattartó és elérhetősége","","missing",""],["duration","Játékidő, felvonások, szünet","","missing",""],["notes","Általános megjegyzés","","missing",""]
+      ]],
+      ["Időzítés","Próba, beépítés, előadás és bontás",[
+        ["arrival","Érkezés és rakodás","","missing",""],["loadin","Beépítés kezdete és időtartama","","missing",""],["rehearsal","Próba / összpróba","","missing",""],["soundcheck","Hangbeállás","","missing",""],["showtime","Előadás kezdése","","missing",""],["strike","Bontás kezdete és időtartama","","missing",""]
+      ]],
+      ["Utazás és logisztika","Járművek, személyzet, parkolás és rakodás",[
+        ["vehicles","Járművek típusa, súlya, rendszáma","","missing",""],["transport","Személyszállítás","","missing",""],["crew-travel","Utazó technikai személyzet","","missing",""],["parking","Parkolás és rakodási útvonal","","missing",""],["cost","Szállítási / logisztikai költség","","missing",""]
+      ]],
+      ["Színpad és díszlet","Méret, padló, takarás és színpadtechnika",[
+        ["stage-size","Színpad szélessége, mélysége, magassága","","missing",""],["floor","Balettpadló / járófelület","","missing",""],["masking","Takarás, forgó, dobogók, lépcsők","","missing",""],["scenery","Díszlet és mozgatása","","missing",""],["stage-special","Egyéb színpadtechnikai igény","","missing",""]
+      ]],
+      ["Fény","Fénypark, vezérlés, füst és áramigény",[
+        ["lighting-inventory","Lámpalista és vezérlés","","missing",""],["lighting-plan","Fényterv / lámpapozíciók","","missing",""],["smoke","Füst / haze","","missing",""],["lighting-power","Teljesítményigény és különleges lámpák","","missing",""]
+      ]],
+      ["Hang","PA, mikrofonok, zenekar, monitorok és beállás",[
+        ["pa","PA és keverőpult","","missing",""],["wireless","Microportok / vezeték nélküli mikrofonok","","missing",""],["inputs","Zenekari inputlista","","missing",""],["monitors","Monitorok és monitorutak","","missing",""],["sound-order","Hangbeállási sorrend","","missing",""],["playback","Bejátszás és effektek","","missing",""]
+      ]],
+      ["Videó és kommunikáció","Vetítés, jelutak és ügyelői kommunikáció",[
+        ["video","Vetítő, vászon, LED vagy monitor","","missing",""],["video-signal","Videójel és csatlakozások","","missing",""],["comms","Ügyelői rendszer / intercom","","missing",""]
+      ]],
+      ["Stáb és öltözők","Személyzet, szereplők és kiszolgálóhelyiségek",[
+        ["cast-crew","Teljes szereplő- és stáblista","","missing",""],["local-crew","Helyi technikai személyzet igénye","","missing",""],["dressing","Öltözők elosztása","","missing",""],["wardrobe","Öltöztető, mosás, vasalás","","missing",""],["hair-makeup","Smink és fodrász","","missing",""]
+      ]],
+      ["Biztonság","Tűzvédelem, pirotechnika és különleges kockázatok",[
+        ["fire","Tűzvédelmi igények","","missing",""],["pyro","Pirotechnika / nyílt láng","","missing",""],["risk","Egyéb biztonsági kockázat","","missing",""]
+      ]],
+      ["Szerződés és számlázás","Szerződő fél és pénzügyi adminisztráció",[
+        ["legal-name","Szerződő cég neve és címe","","missing",""],["tax","Adószám","","missing",""],["bank","Bankszámla","","missing",""],["representative","Képviselő és kapcsolattartó","","missing",""],["billing","Számlázási megjegyzés","","missing",""]
+      ]]
+    ];
+    const clone=v=>JSON.parse(JSON.stringify(v));
+    const now=()=>new Date().toISOString();
+    const makeBlank=()=>({id:null,title:"",venue:"",date:"",updatedAt:now(),sections:clone(schema)});
+    const makeMuzsika=()=>{
+      const r=makeBlank();r.id="sample-muzsika-hangja";r.title="A muzsika hangja";r.venue="Gyula, Tószínpad";r.updatedAt=now();
+      const set=(id,value,status="filled",source="")=>{for(const s of r.sections){const f=s[2].find(x=>x[0]===id);if(f){f[2]=value;f[3]=status;f[4]=source;return}}};
+      set("soundcheck","2026. április 16., 18:00–18:45","filled","Hangbeállási rend");
+      set("vehicles","2 × 7,5 t és 1 × 3,5 t teherautó","filled","TÁJ – Gyula");
+      set("transport","1 × 19 személyes mikrobusz; előadásnapon 1 × 50 személyes autóbusz és 1 × 19 személyes mikrobusz","filled","TÁJ – Gyula");
+      set("crew-travel","8 díszítő, 5 világosító és Ignácz Gyuri; 4 díszítő és 4 világosító marad","verify","TÁJ – Gyula");
+      set("cost","1 113 000 Ft + ÁFA","filled","TÁJ – Gyula");
+      set("wireless","Microportos előadás – pontos darabszám és kiosztás hiányzik","verify","Hangbeállási rend");
+      set("inputs","Zenekaros előadás – végleges inputlista hiányzik","verify","Hangbeállási rend");
+      set("sound-order","18:00 zenekar; 18:10 DóReMi; 18:15 Barabás B.; 18:20 duett; 18:25 A muzsika hangja; 18:30 tercett; 18:35 Rolf–Liesl; 18:40 apácák és kórus","filled","Hangbeállási rend");
+      return r;
+    };
+    let db={riders:[makeMuzsika()],draft:makeBlank()};
+    try{const stored=localStorage.getItem(DB_KEY);if(stored)db=JSON.parse(stored)}catch{localStorage.removeItem(DB_KEY)}
+    let current=clone(db.draft||makeBlank());
+    const $=s=>document.querySelector(s),grid=$("#grid"),list=$("#saved-list"),notice=$("#notice"),count=$("#count");
+    const nameInput=$("#rider-name"),venueInput=$("#rider-venue"),dateInput=$("#rider-date");
+    function persist(){db.draft=clone(current);localStorage.setItem(DB_KEY,JSON.stringify(db))}
+    function optionLabel(r){const stamp=new Date(r.updatedAt).toLocaleDateString("hu-HU");return `${r.title||"Névtelen rider"}${r.venue?` – ${r.venue}`:""} (${stamp})`}
+    function renderLibrary(){list.innerHTML="";if(!db.riders.length){const o=new Option("Nincs mentett rider","");list.add(o);return}db.riders.sort((a,b)=>b.updatedAt.localeCompare(a.updatedAt)).forEach(r=>list.add(new Option(optionLabel(r),r.id)));if(current.id&&db.riders.some(r=>r.id===current.id))list.value=current.id}
+    function updateCount(){const all=current.sections.flatMap(s=>s[2]);const meta=[current.title,current.venue,current.date];count.textContent=`${all.filter(f=>f[2].trim()).length+meta.filter(Boolean).length}/${all.length+3}`}
+    function render(){
+      nameInput.value=current.title||"";venueInput.value=current.venue||"";dateInput.value=current.date||"";grid.innerHTML="";
+      current.sections.forEach((section,si)=>{
+        const card=document.createElement("article");card.className="card";card.innerHTML=`<h2></h2><p></p><div class="fields"></div>`;card.querySelector("h2").textContent=section[0];card.querySelector("p").textContent=section[1];
+        const fields=card.querySelector(".fields");
+        section[2].forEach((field,fi)=>{
+          const wrap=document.createElement("label");wrap.className=`field ${field[3]}`;
+          const head=document.createElement("span");head.className="field-head";const strong=document.createElement("strong");strong.textContent=field[1];
+          const select=document.createElement("select");select.setAttribute("aria-label",`${field[1]} állapota`);
+          Object.entries(labels).forEach(([value,label])=>select.add(new Option(label,value,value===field[3],value===field[3])));
+          select.onchange=()=>{current.sections[si][2][fi][3]=select.value;wrap.className=`field ${select.value}`;persist()};
+          head.append(strong,select);const textarea=document.createElement("textarea");textarea.value=field[2];textarea.placeholder="Adat szükséges…";
+          textarea.oninput=()=>{field[2]=textarea.value;if(textarea.value.trim()&&field[3]==="missing"){field[3]="verify";select.value="verify";wrap.className="field verify"}if(!textarea.value.trim()){field[3]="missing";select.value="missing";wrap.className="field missing"}updateCount();persist()};
+          wrap.append(head,textarea);if(field[4]){const small=document.createElement("small");small.textContent=`Forrás: ${field[4]}`;wrap.append(small)}fields.append(wrap);
+        });grid.append(card);
+      });updateCount();renderLibrary();
+    }
+    [nameInput,venueInput,dateInput].forEach(input=>input.oninput=()=>{current.title=nameInput.value;current.venue=venueInput.value;current.date=dateInput.value;updateCount();persist()});
+    function saveAs(){
+      const proposed=current.title||"Új technikai rider";const title=prompt("Milyen néven mentsük a ridert?",proposed);if(!title)return false;
+      current.id=crypto.randomUUID();current.title=title.trim()||proposed;current.updatedAt=now();db.riders.push(clone(current));persist();render();notice.textContent="Új rider elmentve.";return true;
+    }
+    $("#new").onclick=()=>{if(confirm("Kezdjünk új, üres ridert? A mentetlen módosítások elveszhetnek.")){current=makeBlank();persist();notice.textContent="Új, üres rider.";render()}};
+    $("#save").onclick=()=>{if(!current.id){saveAs();return}const i=db.riders.findIndex(r=>r.id===current.id);current.updatedAt=now();if(i>=0)db.riders[i]=clone(current);else db.riders.push(clone(current));persist();renderLibrary();notice.textContent=`Mentve: ${new Date().toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"})}`};
+    $("#duplicate").onclick=()=>saveAs();
+    $("#open").onclick=()=>{const r=db.riders.find(x=>x.id===list.value);if(!r)return;current=clone(r);persist();notice.textContent="Mentett rider megnyitva.";render()};
+    $("#delete").onclick=()=>{const r=db.riders.find(x=>x.id===list.value);if(!r||!confirm(`Biztosan törlöd: ${r.title||"Névtelen rider"}?`))return;db.riders=db.riders.filter(x=>x.id!==r.id);if(current.id===r.id)current=makeBlank();persist();notice.textContent="A mentett rider törölve.";render()};
+    $("#export").onclick=()=>{const payload={format:"szigligeti-rider",version:1,exportedAt:now(),rider:current};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${(current.title||"technikai-rider").replace(/[^\p{L}\p{N}]+/gu,"-").replace(/^-|-$/g,"").toLowerCase()}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);notice.textContent="A rider exportálva."};
+    $("#import-file").onchange=async e=>{const file=e.target.files[0];e.target.value="";if(!file)return;try{const parsed=JSON.parse(await file.text());if(parsed.format!=="szigligeti-rider"||!parsed.rider?.sections)throw new Error();current=clone(parsed.rider);current.id=null;notice.textContent="Rider importálva. A végleges mentéshez kattints a Mentés gombra.";persist();render()}catch{alert("Ez nem érvényes Szigligeti technikai rider export.")}};
+    $("#print").onclick=()=>window.print();
+    render();
+  </script>
+</body>
+</html>
