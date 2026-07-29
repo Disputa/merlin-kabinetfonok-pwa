@@ -1,4 +1,4 @@
-const CACHE_NAME = "merlin-shell-v7";
+const CACHE_NAME = "merlin-shell-v8";
 const SHARE_CACHE_NAME = "merlin-share-inbox-v1";
 const MAX_SHARED_IMAGES = 3;
 const MAX_SHARED_IMAGE_BYTES = 8 * 1024 * 1024;
@@ -181,5 +181,46 @@ self.addEventListener("fetch", (event) => {
         return response;
       })
       .catch(() => caches.match(event.request)),
+  );
+});
+
+self.addEventListener("push", (event) => {
+  let payload = {};
+  try {
+    payload = event.data?.json?.() || {};
+  } catch {
+    payload = { body: event.data?.text?.() || "Merlin új jelzést küldött." };
+  }
+
+  const title = String(payload.title || "Merlin");
+  const options = {
+    body: String(payload.body || "Új kabinetfőnöki összefoglaló érkezett."),
+    icon: appAsset("icon-192.png"),
+    badge: appAsset("icon-192.png"),
+    tag: String(payload.tag || "merlin-update"),
+    renotify: payload.urgency === "urgent",
+    requireInteraction: payload.urgency === "urgent",
+    data: {
+      url: String(payload.url || APP_BASE),
+    },
+  };
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const target = new URL(event.notification.data?.url || APP_BASE, self.location.origin);
+  event.waitUntil(
+    clients
+      .matchAll({ type: "window", includeUncontrolled: true })
+      .then(async (windows) => {
+        for (const client of windows) {
+          if (new URL(client.url).origin === target.origin) {
+            await client.navigate(target.href);
+            return client.focus();
+          }
+        }
+        return clients.openWindow(target.href);
+      }),
   );
 });
