@@ -204,7 +204,21 @@ self.addEventListener("push", (event) => {
       url: String(payload.url || APP_BASE),
     },
   };
-  event.waitUntil(self.registration.showNotification(title, options));
+  event.waitUntil(
+    Promise.all([
+      self.registration.showNotification(title, options),
+      clients.matchAll({ type: "window", includeUncontrolled: true }).then((windows) =>
+        Promise.all(
+          windows.map((client) =>
+            client.postMessage({
+              type: "merlin:finance-refresh",
+              source: String(payload.source || payload.data?.source || ""),
+            }),
+          ),
+        ),
+      ),
+    ]),
+  );
 });
 
 self.addEventListener("notificationclick", (event) => {
