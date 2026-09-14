@@ -224,17 +224,11 @@ self.addEventListener("push", (event) => {
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
   const target = new URL(event.notification.data?.url || APP_BASE, self.location.origin);
+  // Never hijack an already open normal Chrome tab. That path is what turned a
+  // Merlin alert into Chrome's compact browser view instead of starting the
+  // installed WebAPK. Let Android/Chrome resolve the installed app target.
   event.waitUntil(
     clients
-      .matchAll({ type: "window", includeUncontrolled: true })
-      .then(async (windows) => {
-        for (const client of windows) {
-          if (new URL(client.url).origin === target.origin) {
-            await client.navigate(target.href);
-            return client.focus();
-          }
-        }
-        return clients.openWindow(target.href);
-      }),
+      .openWindow(target.href),
   );
 });
