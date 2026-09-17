@@ -11,7 +11,7 @@
     "name": "rolldown-runtime"
   },
   "app/MerlinClient.tsx": {
-    "file": "assets/MerlinClient-DDHLBUBB.js",
+    "file": "assets/MerlinClient-BS9zg4r2.js",
     "name": "MerlinClient",
     "src": "app/MerlinClient.tsx",
     "isDynamicEntry": true,
@@ -21,7 +21,7 @@
     ]
   },
   "node_modules/vinext/dist/shims/layout-segment-context.js": {
-    "file": "assets/layout-segment-context-CesPN9fh.js",
+    "file": "assets/layout-segment-context-Di_qRwa0.js",
     "name": "layout-segment-context",
     "src": "node_modules/vinext/dist/shims/layout-segment-context.js",
     "isDynamicEntry": true,
@@ -32,7 +32,7 @@
     ]
   },
   "virtual:vinext-app-browser-entry": {
-    "file": "assets/index-B4QkYRaa.js",
+    "file": "assets/index-C4mgCryE.js",
     "name": "index",
     "src": "virtual:vinext-app-browser-entry",
     "isEntry": true,
