@@ -1,4 +1,4 @@
-const CACHE_NAME = "merlin-shell-v10";
+const CACHE_NAME = "merlin-shell-v11";
 const SHARE_CACHE_NAME = "merlin-share-inbox-v1";
 const MAX_SHARED_IMAGES = 3;
 const MAX_SHARED_IMAGE_BYTES = 8 * 1024 * 1024;
