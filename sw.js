@@ -223,7 +223,23 @@ self.addEventListener("push", (event) => {
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
-  const target = new URL(event.notification.data?.url || APP_BASE, self.location.origin);
+  const target = new URL(APP_BASE, self.location.origin);
+  try {
+    const requested = new URL(event.notification.data?.url || APP_BASE, self.location.origin);
+    const knownAppPath =
+      (requested.origin === self.location.origin && requested.pathname.startsWith(APP_BASE)) ||
+      (requested.origin === "https://merlin-kabinetfonok-247.gabor-deme.chatgpt.site" && requested.pathname === "/") ||
+      (requested.origin === "https://disputa.github.io" && requested.pathname === "/merlin-kabinetfonok-pwa/");
+    if (knownAppPath) {
+      for (const name of ["view", "item"]) {
+        if (requested.searchParams.has(name)) {
+          target.searchParams.set(name, requested.searchParams.get(name));
+        }
+      }
+    }
+  } catch {
+    // A hibás értesítési URL is a telepített Merlin kezdőlapjára nyílik.
+  }
   // Never hijack an already open normal Chrome tab. That path is what turned a
   // Merlin alert into Chrome's compact browser view instead of starting the
   // installed WebAPK. Let Android/Chrome resolve the installed app target.
