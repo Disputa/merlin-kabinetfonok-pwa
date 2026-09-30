@@ -1,6 +1,6 @@
 {
   "F:/CODEX_ACTIVE/Documents/Codex/Merlin Professzionális Kabinetfőnök/src/clients/merlin_pwa/app/MerlinClient.tsx": {
-    "file": "assets/MerlinClient-e5j0ncO4.js",
+    "file": "assets/MerlinClient-x7EN8ZZr.js",
     "name": "MerlinClient",
     "src": "F:/CODEX_ACTIVE/Documents/Codex/Merlin Professzionális Kabinetfőnök/src/clients/merlin_pwa/app/MerlinClient.tsx",
     "isDynamicEntry": true,
@@ -10,7 +10,7 @@
     ]
   },
   "F:/CODEX_ACTIVE/Documents/Codex/Merlin Professzionális Kabinetfőnök/src/clients/merlin_pwa/node_modules/vinext/dist/shims/layout-segment-context.js": {
-    "file": "assets/layout-segment-context-SuLK4omF.js",
+    "file": "assets/layout-segment-context-C3D1Ju8n.js",
     "name": "layout-segment-context",
     "src": "F:/CODEX_ACTIVE/Documents/Codex/Merlin Professzionális Kabinetfőnök/src/clients/merlin_pwa/node_modules/vinext/dist/shims/layout-segment-context.js",
     "isDynamicEntry": true,
@@ -32,7 +32,7 @@
     "name": "rolldown-runtime"
   },
   "virtual:vinext-app-browser-entry": {
-    "file": "assets/index-D_ic0GW-.js",
+    "file": "assets/index-k6g_TwNm.js",
     "name": "index",
     "src": "virtual:vinext-app-browser-entry",
     "isEntry": true,

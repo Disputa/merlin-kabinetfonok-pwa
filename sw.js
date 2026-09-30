@@ -1,4 +1,4 @@
-const CACHE_NAME = "merlin-shell-v11";
+const CACHE_NAME = "merlin-shell-v12";
 const SHARE_CACHE_NAME = "merlin-share-inbox-v1";
 const MAX_SHARED_IMAGES = 3;
 const MAX_SHARED_IMAGE_BYTES = 8 * 1024 * 1024;
@@ -224,6 +224,10 @@ self.addEventListener("push", (event) => {
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
   const target = new URL(APP_BASE, self.location.origin);
+  const notice = {
+    title: String(event.notification.title || "Merlin értesítés").slice(0, 120),
+    body: String(event.notification.body || "").slice(0, 600),
+  };
   try {
     const requested = new URL(event.notification.data?.url || APP_BASE, self.location.origin);
     const knownAppPath =
@@ -240,11 +244,20 @@ self.addEventListener("notificationclick", (event) => {
   } catch {
     // A hibás értesítési URL is a telepített Merlin kezdőlapjára nyílik.
   }
+  // A rövid üzenet a URL-töredékben marad: a szerver nem kapja meg, a PWA
+  // pedig mobilneten, az otthoni/munkahelyi Bridge nélkül is meg tudja mutatni.
+  target.hash = `merlin-notice=${encodeURIComponent(JSON.stringify(notice))}`;
   // Never hijack an already open normal Chrome tab. That path is what turned a
   // Merlin alert into Chrome's compact browser view instead of starting the
-  // installed WebAPK. Let Android/Chrome resolve the installed app target.
+  // installed WebAPK. Let Android/Chrome resolve the installed app target, then
+  // notify the returned client too: an already open WebAPK may keep its old URL.
   event.waitUntil(
     clients
-      .openWindow(target.href),
+      .openWindow(target.href)
+      .then((client) => client?.postMessage?.({
+        type: "merlin:notification-open",
+        notice,
+        item: target.searchParams.get("item") || "",
+      })),
   );
 });
